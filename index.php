@@ -1,0 +1,55 @@
+<html lang="es">
+	<head> 
+		<title>ITIC TUTORIALES</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<link rel="stylesheet" href="css/estilos.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	<body>
+		<header>
+			<div class="alert alert-info">
+			<h3>Validar la extensión de archivos (JS)</h3>
+			</div>
+		</header>
+
+		<section class="text-center" >
+			<input type="file" id="archivoInput" class="col-md-offset-4 col-md-4" onchange="return validarExt()" />
+			<br><br>
+			<div id="visorArchivo">
+				<!--Aqui se desplegará el fichero-->
+			</div>
+		</section>
+
+</body>
+</html>
+<script type="text/javascript">
+
+function validarExt()
+{
+    var archivoInput = document.getElementById('archivoInput');
+    var archivoRuta = archivoInput.value;
+    var extPermitidas = /(.pdf)$/i;
+    if(!extPermitidas.exec(archivoRuta)){
+        alert('Asegurese de haber seleccionado un PDF');
+        archivoInput.value = '';
+        return false;
+    }
+
+    else
+    {
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0]) 
+        {
+            var visor = new FileReader();
+            visor.onload = function(e) 
+            {
+                document.getElementById('visorArchivo').innerHTML = 
+                '<embed src="'+e.target.result+'" width="500" height="375" />';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
+</script>
